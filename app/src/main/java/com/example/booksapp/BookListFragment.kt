@@ -2,6 +2,7 @@ package com.example.booksapp
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class BookListFragment : Fragment() {
@@ -23,6 +26,8 @@ class BookListFragment : Fragment() {
     private lateinit var recBooks : RecyclerView
     private var repository = BooksRepository()
     private lateinit var booksList: MutableList<Books>
+
+    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +50,10 @@ class BookListFragment : Fragment() {
                 viewModel.bookTitle = Books.title
                 view?.findNavController()?.navigate(R.id.action_bookListFragment_to_descriptionFragment)
         }
+
+
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -53,3 +62,4 @@ class BookListFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 }
+

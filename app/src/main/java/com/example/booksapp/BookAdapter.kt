@@ -1,20 +1,17 @@
 package com.example.booksapp
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 
 class BookAdapter(
     var booksList: MutableList<Books>,
     var onClick: (Books) -> Unit
+
 ) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
     class BooksHolder (v: View) : RecyclerView.ViewHolder(v) {
         private var view: View

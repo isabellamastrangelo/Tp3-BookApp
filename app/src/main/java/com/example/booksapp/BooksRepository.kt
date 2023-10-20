@@ -1,7 +1,13 @@
 package com.example.booksapp
 
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 class BooksRepository {
+
     private var booksList : MutableList<Books> = mutableListOf()
+    val db = Firebase.firestore
+
 
     init{
         booksList.add(Books("Harry Potter 1","Harry Potter se ha quedado huérfano y vive en casa de sus abominables tíos y del insoportable primo Dudley. Se siente muy triste y solo, hasta que un buen día recibe una carta que cambiará su vida para siempre. En ella le comunican que ha sido aceptado como alumno en el colegio interno Hogwarts de magia y hechicería.",""))
@@ -18,7 +24,7 @@ class BooksRepository {
         booksList.add(Books("The Picture of Dorian Gray","La víctima es Dorian Gray, un bello y presuntuoso joven a quien un amigo hace un retrato al óleo. Cuando Dorian trabe amistad con lord Henry Wotton, un cínico filósofo, este le convencerá de que sus más valiosas posesiones son su belleza y su juventud. Y, a partir de ahí, su deseo de que su retrato envejezca mientras él permanece joven se hace realidad. Pero ¿a qué precio?Estamos, simple y llanamente, ante uno de los libros más bellos e ingeniosos de todos los tiempos.Luis Antonio de Villena dijo...\n" + "«Un libro lleno de fascinación y encanto, fácil y difícil a la vez, y cuyo único protagonista y tema esencial es la belleza. Una de las pasiones que hacen vivir y dan sentido y fuerza al mundo.»",""))
         booksList.add(Books("Wonder","No describiré cómo me veo. Lo que sea que estés pensando, probablemente sea peor.\n" + "\n" + "August Pullman nació con una diferencia facial que, hasta ahora, le ha impedido ir a una escuela convencional. Comenzando el quinto grado en Beecher Prep, no quiere nada más que ser tratado como un niño común, pero sus nuevos compañeros de clase no pueden pasar por alto la extraordinaria cara de Auggie. Wonder, comienza desde el punto de vista de Auggie, pero pronto cambia para incluir a sus compañeros de clase, su hermana, el novio de ella y otros.",""))
         booksList.add(Books("Crooked Kingdom","Bienvenido al mundo de los Grisha.\n" + "Kaz Brekker y su equipo de parias mortales acaban de llevar a cabo un atraco tan atrevido que ni ellos mismos pensaron que sobrevivirían. Pero en lugar de repartirse una gran recompensa, vuelven a luchar por sus vidas.\n" + "Traicionada y muy debilitada, la tripulación tiene pocos recursos, aliados y esperanza. Mientras poderosas fuerzas de todo el mundo descienden sobre Ketterdam para descubrir los secretos de la peligrosa droga conocida como jurda parem, viejos rivales y nuevos enemigos emergen para desafiar la astucia de Kaz y poner a prueba las frágiles lealtades del equipo.",""))
-        booksList.add(Books("La soledad de los números primos","Existen entre los números primos algunos aún más especiales. Son aquellos que los matemáticos llaman primos gemelos, pues entre ellos se interpone siempre un número par. Así, números como el 11 y el 13, el 17 y el 19, o el 41 y el 43, permanecen próximos, pero sin llegar a tocarse nunca. Esta verdad matemática es la hermosa metáfora que el autor ha escogido para narrar la conmovedora historia de Alice y Mattia, dos seres cuyas vidas han quedado condicionadas por las consecuencias irreversibles de sendos episodios ocurridos en su niñez. Desde la adolescencia hasta bien entrada la edad adulta, y pese a la fuerte atracción que indudablemente los une, la vida erigirá entre ellos barreras invisibles que pondrán a prueba la solidez de su relación.",""))
+       /* booksList.add(Books("La soledad de los números primos","Existen entre los números primos algunos aún más especiales. Son aquellos que los matemáticos llaman primos gemelos, pues entre ellos se interpone siempre un número par. Así, números como el 11 y el 13, el 17 y el 19, o el 41 y el 43, permanecen próximos, pero sin llegar a tocarse nunca. Esta verdad matemática es la hermosa metáfora que el autor ha escogido para narrar la conmovedora historia de Alice y Mattia, dos seres cuyas vidas han quedado condicionadas por las consecuencias irreversibles de sendos episodios ocurridos en su niñez. Desde la adolescencia hasta bien entrada la edad adulta, y pese a la fuerte atracción que indudablemente los une, la vida erigirá entre ellos barreras invisibles que pondrán a prueba la solidez de su relación.",""))
         booksList.add(Books("El Jardin Olvidado","En vísperas de la Primera Guerra Mundial, una niña es abandonada en un barco con destino a Australia. Una misteriosa mujer llamada la Autora ha prometido cuidar de ella, pero la Autora desaparece sin dejar rastro… En la noche de su veintiún cumpleaños, Nell O’Connor descubre que es adoptada, lo que cambiará su vida para siempre. Décadas más tarde, se embarca en la búsqueda de la verdad de sus antepasados...A la muerte de Nell, su nieta Casandra recibe una inesperada herencia: una cabaña y su olvidado jardín en las tierras de Cornualles que es conocido por la gente por los secretos que estos esconden. Aquí es donde Casandra descubrirá finalmente la verdad sobre la familia y resolverá el misterio, que se remonta un siglo, de una niña desaparecida.",""))
         booksList.add(Books("Mujercitas","Mujercitas es una novela escrita por la autora estadounidense Louisa May Alcott. La historia se centra en la vida de cuatro hermanas adolescentes con personalidades muy dispares que, pese a las dificultades, intentan superarse así mismas en el contexto de la Guerra de Secesión.\n",""))
         booksList.add(Books("Percy Jackson y el ladrón del rayo","Cuenta las aventuras de un chico de doce años, Percy Jackson, cuando descubre que es un semidiós; hijo de una mortal y del dios griego, Poseidón. Percy y sus amigos realizan una búsqueda para prevenir una guerra apocalíptica entre los dioses griegos Zeus y Poseidón.\n",""))
@@ -52,9 +58,27 @@ class BooksRepository {
         booksList.add(Books("A good girl’s guide to murder","Esta novela trata sobre una chica llamada Pippa que escoge como tema para un proyecto escolar de preparatoria el asesinato de una chica llamada Andie Bell, y esto hace que empiece a encontrar incongruencias en el caso y acabe metida en una investigación que consume prácticamente todo su tiempo.",""))
         booksList.add(Books("The perks of being a wallflower","Más íntimas que un diario, las cartas de Charlie son singulares y únicas, hilarantes y devastadoras. Todo lo que conocemos sobre ellas es el mundo que comparte. Atrapado entre tratar de vivir su vida secundaria y a la vez huir de ella, Charlie descubre el mundo de las primeras citas, los dramas familiares y nuevos amigos, cuando todo lo que requiere es la canción perfecta en ese impulso perfecto para sentirse infinito.",""))
 
+ */
+        db.collection("Books")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    //print(document)
+                    booksList.add(document.toObject(Books::class.java))
+                    print(document.id)
+                    //Log.d(TAG, "${document.id} => ${document.data}")
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                print("error getting documents")
+            }
+
     }
 
     fun getBooks () : MutableList<Books>{
         return booksList
     }
+
+
 }
