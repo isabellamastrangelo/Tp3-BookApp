@@ -9,6 +9,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Toast
+//import com.bumptech.glide.Glide
+import com.example.booksapp.DescriptionFragment
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 class DescriptionFragment : Fragment() {
 
     companion object {
@@ -21,6 +30,10 @@ class DescriptionFragment : Fragment() {
     private lateinit var title : TextView
     private lateinit var description : TextView
 
+    private lateinit var idCompartido: sharedData
+    private var db = Firebase.firestore
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +41,21 @@ class DescriptionFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_description, container, false)
         title = v.findViewById(R.id.titleBook)
         description = v.findViewById(R.id.descriptionBook)
+
+        db = FirebaseFirestore.getInstance()
+
+        idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
+        idCompartido.dataID.observe(viewLifecycleOwner) { data1 ->
+
+            db.collection("Books").document(data1).get().addOnSuccessListener {
+
+                title.text = (it.data?.get("title").toString())
+                description.text = (it.data?.get("description").toString())
+
+            }.addOnFailureListener {
+                Toast.makeText(context, "No se encontraron datos", Toast.LENGTH_SHORT).show()
+            }
+        }
         return v;
     }
 
