@@ -18,20 +18,18 @@ import com.google.firebase.ktx.Firebase
 
 class BookAdapter(
     booksList: ArrayList<Books>,
-   // var onClick: (Books) -> Unit,
-
      val onDeleteClick : (Int)->Unit,
      val onEditClick : (Int) -> Unit,
      val onItemClick: (Int) -> Unit
 
 ) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
-    private lateinit var booksList: ArrayList<Books>
+    private var booksList: ArrayList<Books>
     init {
         this.booksList = booksList
     }
     class BooksHolder (v: View) : RecyclerView.ViewHolder(v) {
-        var title= v.findViewById<TextView>(R.id.titleBook)
-        var description= v.findViewById<TextView>(R.id.descriptionBook)
+        val title= v.findViewById<TextView>(R.id.titleBook)
+        val description= v.findViewById<TextView>(R.id.descriptionBook)
 
         val editar = v.findViewById<Button>(R.id.buttonEdit)
         val eliminar = v.findViewById<Button>(R.id.buttonEdit)

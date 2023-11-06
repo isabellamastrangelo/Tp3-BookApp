@@ -38,23 +38,34 @@ class EditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_edit, container, false)
+        val v = inflater.inflate(R.layout.fragment_edit, container, false)
 
-        newTitle = view.findViewById(R.id.tituloNuevo)
-        newDescription = view.findViewById(R.id.descripcionNueva)
+        newTitle = v.findViewById(R.id.tituloNuevo)
+        newDescription = v.findViewById(R.id.descripcionNueva)
 
-        botonSubirDatos = view.findViewById(R.id.botonSubir)
+        botonSubirDatos = v.findViewById(R.id.botonSubir)
 
         db = FirebaseFirestore.getInstance()
 
         idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
         idCompartido.dataID.observe(viewLifecycleOwner) { data1 ->
+            db.collection("Books").document(data1).get().addOnSuccessListener { documentSnapshot ->
+                val title = documentSnapshot.getString("title")
+                val description = documentSnapshot.getString("description")
+                val idBook = documentSnapshot.getString("idBook")
 
-            db.collection("SuperHeroes").document(data1).get().addOnSuccessListener {
+                newTitle.setText(title)
+                newDescription.setText(description)
+                if (idBook != null) {
+                    bookID = idBook
+                }
 
-                newTitle.setText(it.data?.get("title").toString())
-                newDescription.setText(it.data?.get("description").toString())
-                bookID = it.data?.get("idSuperHero").toString()
+                /*
+                            db.collection("Books").document(data1).get().addOnSuccessListener {
+
+                                newTitle.setText(it.data?.get("title").toString())
+                                newDescription.setText(it.data?.get("description").toString())
+                                bookID = it.data?.get("idBook").toString()*/
 
             }.addOnFailureListener {
                 Toast.makeText(context, "no se encontraron datos", Toast.LENGTH_SHORT).show()
@@ -65,7 +76,7 @@ class EditFragment : Fragment() {
                 val newBook = hashMapOf(
                     "title" to newTitle.text.toString(),
                     "description" to newDescription.text.toString(),
-                    "idSuperHero" to bookID
+                    "idBook" to bookID
                 )
 
                 db.collection("Books").document(data1).set(newBook)

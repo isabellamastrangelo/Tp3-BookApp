@@ -77,8 +77,8 @@ class BookListFragment : Fragment() {
         db.collection("Books").get().addOnSuccessListener {
             if (!it.isEmpty) {
                 for (data in it.documents) {
-                    val superHero:Books? = data.toObject<Books>(Books::class.java)
-                    booksList.add(superHero!!)
+                    val book:Books? = data.toObject<Books>(Books::class.java)
+                    booksList.add(book!!)
                 }
 
                 adapter = BookAdapter(booksList,
