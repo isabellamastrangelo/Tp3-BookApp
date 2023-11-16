@@ -29,8 +29,8 @@ class Adapter2(
     }
     class BooksHolder2 (v: View) : RecyclerView.ViewHolder(v) {
 
-        val editar = v.findViewById<Button>(R.id.buttonDelete2)
-        val eliminar = v.findViewById<Button>(R.id.buttonEdit2)
+        //val editar = v.findViewById<Button>(R.id.buttonDelete2)
+        //val eliminar = v.findViewById<Button>(R.id.buttonEdit2)
 
     }
 
@@ -41,12 +41,12 @@ class Adapter2(
 
     override fun onBindViewHolder(holder: BooksHolder2, position: Int) {
         val item = booksList[position]
-        holder.eliminar.setOnClickListener {
+        /*holder.eliminar.setOnClickListener {
             onDeleteClick(position)
         }
         holder.editar.setOnClickListener {
             onEditClick(position)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {

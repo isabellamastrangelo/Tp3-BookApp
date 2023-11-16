@@ -71,8 +71,8 @@ class BookListFragment : Fragment() {
                 }
 
                 adapter = BookAdapter(booksList,
-                    //onDeleteClick = {position -> deleteBook(position) },
-                    //onEditClick = {position -> editBook(position) },
+                    onDeleteClick = {position -> deleteBook(position) },
+                    onEditClick = {position -> editBook(position) },
                     onItemClick = {position -> seeBookData(position)} )
 
                 recBooks.adapter = adapter
@@ -92,13 +92,26 @@ class BookListFragment : Fragment() {
 
          findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
 
+    }
+    fun editBook(position: Int) {
+        idBookActual = booksList[position].idBook.toString()
 
-        //al comentar el find nav controller y el render del adapter funciona, pero porque no se esta
-        // utilizando la position en ningun lado, asumo que el error viene que ahi
-        //
-        //el id lo esta sacando correctamente, cuando lo pongo en snackbar lo imprime
+        idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
+        idCompartido.dataID.value = idBookActual
+
+        findNavController().navigate(R.id.action_bookListFragment_to_editFragment)
     }
 
+    fun deleteBook (position : Int){
+
+        db.collection("Books").document(booksList[position].idBook.toString()).delete()
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(),"Book deleted", Toast.LENGTH_SHORT).show()
+                adapter.notifyItemRemoved(position)
+                booksList.removeAt(position)
+            }
+            .addOnFailureListener { Toast.makeText(requireContext(),"Error in deleting book", Toast.LENGTH_SHORT).show() }
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[BookListViewModel::class.java]

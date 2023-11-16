@@ -19,7 +19,9 @@ import com.google.firebase.ktx.Firebase
 
 class BookAdapter(
     booksList: ArrayList<Books>,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit,
+    val onDeleteClick : (Int)->Unit,
+    val onEditClick : (Int) -> Unit
 
 ) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
     private var booksList: ArrayList<Books>
@@ -28,14 +30,11 @@ class BookAdapter(
     }
     class BooksHolder (v: View) : RecyclerView.ViewHolder(v) {
         val title= v.findViewById<TextView>(R.id.txtTitleBooks)
-        val description= v.findViewById<TextView>(R.id.descriptionBook)
-
+        val editar = v.findViewById<Button>(R.id.buttonEdit)
+        val eliminar = v.findViewById<Button>(R.id.buttonDelete)
 
         fun render(booksModel: Books){
             title.text = booksModel.title
-            //description.text = booksModel.description
-
-            //el error es:     java.lang.NullPointerException
         }
     }
 
@@ -48,11 +47,17 @@ class BookAdapter(
         val item = booksList[position]
         holder.render(item)
         print(item.toString())
-        if (item != null) {
+        //if (item != null) {
             holder.itemView.setOnClickListener {
                 onItemClick(position)
             }
-        }
+            holder.eliminar.setOnClickListener {
+                onDeleteClick(position)
+            }
+            holder.editar.setOnClickListener {
+                onEditClick(position)
+            }
+        //}
     }
 
     override fun getItemCount(): Int {

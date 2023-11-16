@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -40,7 +41,6 @@ class DescriptionFragment : Fragment() {
 
     private lateinit var buttonEdit : Button
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,10 +48,9 @@ class DescriptionFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_description, container, false)
         title = v.findViewById(R.id.titleBook)
         description = v.findViewById(R.id.descriptionBook)
-
-        buttonEdit = v.findViewById(R.id.buttonEdit2)
-
+        booksList = arrayListOf()
         db = FirebaseFirestore.getInstance()
+       // buttonEdit = v.findViewById(R.id.buttonEdit2)
 
         idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
         idCompartido.dataID.observe(viewLifecycleOwner) { data1 ->
@@ -64,11 +63,14 @@ class DescriptionFragment : Fragment() {
             }.addOnFailureListener {
                 Toast.makeText(context, "No se encontraron datos", Toast.LENGTH_SHORT).show()
             }
+        /*buttonEdit.setOnClickListener {
+            findNavController().navigate(R.id.action_descriptionFragment_to_editFragment)
+        }*/
         }
         return v;
     }
 
-    private fun initRecyclerView() {
+   /* private fun initRecyclerView() {
         db.collection("Books").get().addOnSuccessListener {
             if (!it.isEmpty) {
                 for (data in it.documents) {
@@ -85,7 +87,7 @@ class DescriptionFragment : Fragment() {
             Toast.makeText(context, it.toString(),Toast.LENGTH_SHORT).show()
         }
 
-    }
+    }*/
 
     fun editBook(position: Int) {
         idBookActual = booksList[position].idBook.toString()
@@ -93,7 +95,7 @@ class DescriptionFragment : Fragment() {
         idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
         idCompartido.dataID.value = idBookActual
 
-        findNavController().navigate(R.id.action_descriptionFragment_to_editFragment)
+        findNavController().navigate(R.id.action_bookListFragment_to_editFragment)
     }
 
     fun deleteBook (position : Int){
@@ -110,9 +112,6 @@ class DescriptionFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(DescriptionViewModel::class.java)
         viewModelBookList = ViewModelProvider(requireActivity()).get(BookListViewModel::class.java)
-
-        //title.text = viewModelBookList.bookTitle
-        //description.text = viewModelBookList.bookDescription
 
     }
 
