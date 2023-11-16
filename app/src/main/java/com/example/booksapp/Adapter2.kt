@@ -16,30 +16,30 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class BookAdapter(
+class Adapter2(
     booksList: ArrayList<Books>,
-     //val onDeleteClick : (Int)->Unit,
-    // val onEditClick : (Int) -> Unit,
-     val onItemClick: (Int) -> Unit
+    val onDeleteClick : (Int)->Unit,
+    val onEditClick : (Int) -> Unit,
+    //val onItemClick: (Int) -> Unit
 
-) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
+) : RecyclerView.Adapter<Adapter2.BooksHolder2>() {
     private var booksList: ArrayList<Books>
     init {
         this.booksList = booksList
     }
-    class BooksHolder (v: View) : RecyclerView.ViewHolder(v) {
-        val title= v.findViewById<TextView>(R.id.titleBook)
-        val description= v.findViewById<TextView>(R.id.descriptionBook)
+    class BooksHolder2 (v: View) : RecyclerView.ViewHolder(v) {
+        /*val title= v.findViewById<TextView>(R.id.titleBook)
+        val description= v.findViewById<TextView>(R.id.descriptionBook)*/
 
-       // val editar = v.findViewById<Button>(R.id.buttonEdit)
-       // val eliminar = v.findViewById<Button>(R.id.buttonEdit)
+        val editar = v.findViewById<Button>(R.id.buttonDelete2)
+        val eliminar = v.findViewById<Button>(R.id.buttonEdit2)
 
-        fun render(booksModel: Books){
+        /*fun render(booksModel: Books){
             title.text = booksModel.title
             description.text = booksModel.description
 
 
-        }
+        }*/
         /*fun setTitle (title : String) {
             var txtTitle: TextView = view.findViewById(R.id.txtTitleBooks)
             txtTitle.text = title
@@ -50,23 +50,25 @@ class BookAdapter(
         }*/
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksHolder {
-        val v =  LayoutInflater.from(parent.context).inflate(R.layout.itembooks,parent,false)
-        return (BooksHolder(v))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksHolder2 {
+        val v =  LayoutInflater.from(parent.context).inflate(R.layout.fragment_description,parent,false)
+        return (BooksHolder2(v))
     }
 
-    override fun onBindViewHolder(holder: BooksHolder, position: Int) {
+
+
+    override fun onBindViewHolder(holder: BooksHolder2, position: Int) {
         val item = booksList[position]
-        holder.render(item)
-        /*holder.eliminar.setOnClickListener {
+        //holder.render(item)
+        holder.eliminar.setOnClickListener {
             onDeleteClick(position)
         }
         holder.editar.setOnClickListener {
             onEditClick(position)
-        }*/
-        holder.itemView.setOnClickListener {
-            onItemClick(position)
         }
+        /*holder.itemView.setOnClickListener {
+            onItemClick(position)
+        }*/
 
         /*
         holder.setTitle(booksList[position].title)

@@ -82,8 +82,8 @@ class BookListFragment : Fragment() {
                 }
 
                 adapter = BookAdapter(booksList,
-                    onDeleteClick = {position -> deleteBook(position) },
-                    onEditClick = {position -> editBook(position) },
+                    //onDeleteClick = {position -> deleteBook(position) },
+                    //onEditClick = {position -> editBook(position) },
                     onItemClick = {position -> seeBookData(position)} )
 
                 recBooks.adapter = adapter
@@ -102,7 +102,7 @@ class BookListFragment : Fragment() {
 
         findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
     }
-
+/*
     fun editBook(position: Int) {
         idBookActual = booksList[position].idBook.toString()
 
@@ -121,7 +121,7 @@ class BookListFragment : Fragment() {
                 booksList.removeAt(position)
             }
             .addOnFailureListener { Toast.makeText(requireContext(),"Error in deleting book", Toast.LENGTH_SHORT).show() }
-    }
+    }*/
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
