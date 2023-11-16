@@ -47,7 +47,7 @@ class CreateUserFragment : Fragment() {
             print(newUser)
             print(newPass)
             var userExists: User? = viewModelLogin.usersList.find { u -> u.username == newUser }
-            //INCLUSO SI COMENTO TODO Y ESTA LISTA QUEDA DESCOMENTADA SE CIERRA
+
             if (newUser.isEmpty() || newPass.isEmpty()) {
                 Snackbar.make(v, "Please insert your Username and Password", Snackbar.LENGTH_SHORT).show()
             }
@@ -56,7 +56,6 @@ class CreateUserFragment : Fragment() {
             }
             else {
                 viewModelLogin.usersList.add(User(newUser, newPass))
-                //LO QUE ESTA PASANDO CREO QUE ES QUE NO RECONOCE LAS VARIABLES COMO STRINGS
                 Snackbar.make(v, "User created", Snackbar.LENGTH_SHORT).show()
                 print("user created")
                 view?.findNavController()?.navigate(R.id.action_createUserFragment_to_loginScreen)

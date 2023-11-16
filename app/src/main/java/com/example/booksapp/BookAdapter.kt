@@ -19,9 +19,9 @@ import com.google.firebase.ktx.Firebase
 
 class BookAdapter(
     booksList: ArrayList<Books>,
-    private val onItemClick: (Int) -> Unit,
-    val onDeleteClick : (Int)->Unit,
-    private val onEditClick : (Int) -> Unit
+    private val item: (Int) -> Unit,
+    val delete : (Int)->Unit,
+    private val edit : (Int) -> Unit
 
 ) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
     private var booksList: ArrayList<Books>
@@ -30,11 +30,11 @@ class BookAdapter(
     }
     class BooksHolder (v: View) : RecyclerView.ViewHolder(v) {
         val title= v.findViewById<TextView>(R.id.txtTitleBooks)
-        val editar = v.findViewById<Button>(R.id.buttonEdit)
-        val eliminar = v.findViewById<Button>(R.id.buttonDelete)
+        val buttonEdit = v.findViewById<Button>(R.id.buttonEdit)
+        val buttonDelete = v.findViewById<Button>(R.id.buttonDelete)
 
-        fun render(booksModel: Books){
-            title.text = booksModel.title
+        fun render(thisBook: Books){
+            title.text = thisBook.title
         }
     }
 
@@ -46,18 +46,16 @@ class BookAdapter(
     override fun onBindViewHolder(holder: BooksHolder, position: Int) {
         val item = booksList[position]
         holder.render(item)
-        print(item.toString())
-        //if (item != null) {
-            holder.itemView.setOnClickListener {
-                onItemClick(position)
-            }
-            holder.eliminar.setOnClickListener {
-                onDeleteClick(position)
-            }
-            holder.editar.setOnClickListener {
-                onEditClick(position)
-            }
-        //}
+
+        holder.itemView.setOnClickListener {
+            item(position)
+        }
+        holder.buttonDelete.setOnClickListener {
+            delete(position)
+        }
+        holder.buttonEdit.setOnClickListener {
+            edit(position)
+        }
     }
 
     override fun getItemCount(): Int {
