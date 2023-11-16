@@ -21,7 +21,7 @@ class BookAdapter(
     booksList: ArrayList<Books>,
     private val onItemClick: (Int) -> Unit,
     val onDeleteClick : (Int)->Unit,
-    val onEditClick : (Int) -> Unit
+    private val onEditClick : (Int) -> Unit
 
 ) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
     private var booksList: ArrayList<Books>
