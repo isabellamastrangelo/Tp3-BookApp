@@ -12,8 +12,8 @@ import android.widget.ImageView
 import android.widget.Toast
 //import com.bumptech.glide.Glide
 import com.example.booksapp.R
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
+//import com.google.firebase.firestore.FirebaseFirestore
+//import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class Adapter2(

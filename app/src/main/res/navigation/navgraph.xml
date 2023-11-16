@@ -13,9 +13,6 @@
             android:id="@+id/action_bookListFragment_to_descriptionFragment"
             app:destination="@id/descriptionFragment" />
         <action
-            android:id="@+id/action_bookListFragment_to_editFragment"
-            app:destination="@id/editFragment" />
-        <action
             android:id="@+id/action_bookListFragment_to_postBookFragment"
             app:destination="@id/postBookFragment" />
     </fragment>
@@ -43,7 +40,11 @@
         android:id="@+id/descriptionFragment"
         android:name="com.example.booksapp.DescriptionFragment"
         android:label="fragment_description"
-        tools:layout="@layout/fragment_description" />
+        tools:layout="@layout/fragment_description" >
+        <action
+            android:id="@+id/action_descriptionFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editFragment"
         android:name="com.example.booksapp.EditFragment"

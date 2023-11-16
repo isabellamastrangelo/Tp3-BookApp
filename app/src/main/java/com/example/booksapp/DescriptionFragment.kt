@@ -1,27 +1,19 @@
 package com.example.booksapp
 
-import androidx.lifecycle.ViewModelProvider
+//import com.bumptech.glide.Glide
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
-
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-//import com.bumptech.glide.Glide
-import com.example.booksapp.DescriptionFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.example.booksapp.BookAdapter
 
 class DescriptionFragment : Fragment() {
 
@@ -46,6 +38,8 @@ class DescriptionFragment : Fragment() {
 
     private lateinit var recBooks : RecyclerView
 
+    private lateinit var buttonEdit : Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +48,8 @@ class DescriptionFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_description, container, false)
         title = v.findViewById(R.id.titleBook)
         description = v.findViewById(R.id.descriptionBook)
+
+        buttonEdit = v.findViewById(R.id.buttonEdit2)
 
         db = FirebaseFirestore.getInstance()
 
@@ -83,29 +79,21 @@ class DescriptionFragment : Fragment() {
                 adapter = Adapter2(booksList,
                     onDeleteClick = {position -> deleteBook(position) },
                     onEditClick = {position -> editBook(position) })
-                    //onItemClick = {position -> seeBookData(position)} )
                 recBooks.adapter = adapter
             }
         }.addOnFailureListener {
             Toast.makeText(context, it.toString(),Toast.LENGTH_SHORT).show()
         }
+
     }
-    fun seeBookData(position:Int) {
 
-        idBookActual = booksList[position].idBook.toString()
-
-        idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
-        idCompartido.dataID.value = idBookActual
-
-        findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
-    }
     fun editBook(position: Int) {
         idBookActual = booksList[position].idBook.toString()
 
         idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
         idCompartido.dataID.value = idBookActual
 
-        findNavController().navigate(R.id.action_bookListFragment_to_editFragment)
+        findNavController().navigate(R.id.action_descriptionFragment_to_editFragment)
     }
 
     fun deleteBook (position : Int){
@@ -123,8 +111,8 @@ class DescriptionFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(DescriptionViewModel::class.java)
         viewModelBookList = ViewModelProvider(requireActivity()).get(BookListViewModel::class.java)
 
-        title.text = viewModelBookList.bookTitle
-        description.text = viewModelBookList.bookDescription
+        //title.text = viewModelBookList.bookTitle
+        //description.text = viewModelBookList.bookDescription
 
     }
 

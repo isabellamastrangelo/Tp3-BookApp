@@ -90,7 +90,7 @@ class BookListFragment : Fragment() {
 
         Snackbar.make(v, numero , Snackbar.LENGTH_SHORT).show()
 
-         //findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
+         findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
 
 
         //al comentar el find nav controller y el render del adapter funciona, pero porque no se esta
