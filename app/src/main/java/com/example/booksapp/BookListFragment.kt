@@ -22,6 +22,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.booksapp.Books
 
 import com.example.booksapp.BookListViewModel
+import com.google.android.material.snackbar.Snackbar
+
 //import com.google.android.play.core.integrity.v
 
 
@@ -60,19 +62,6 @@ class BookListFragment : Fragment() {
         return v
     }
 
-  /*  override fun onStart() {
-        super.onStart()
-
-        recBooks.setHasFixedSize(true)
-
-        recBooks.layoutManager  = LinearLayoutManager(context)
-
-        recBooks.adapter = BookAdapter(repository.getBooks()){ Books ->
-                viewModel.bookDescription = Books.description
-                viewModel.bookTitle = Books.title
-                view?.findNavController()?.navigate(R.id.action_bookListFragment_to_descriptionFragment)
-        }
-    }*/
     private fun initRecyclerView() {
         db.collection("Books").get().addOnSuccessListener {
             if (!it.isEmpty) {
@@ -94,34 +83,21 @@ class BookListFragment : Fragment() {
     }
 
     fun seeBookData(position:Int) {
-
+        val numero = booksList[position].toString()
         idBookActual = booksList[position].idBook.toString()
-
         idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
         idCompartido.dataID.value = idBookActual
 
-        findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
+        Snackbar.make(v, numero , Snackbar.LENGTH_SHORT).show()
+
+         //findNavController().navigate(R.id.action_bookListFragment_to_descriptionFragment)
+
+
+        //al comentar el find nav controller y el render del adapter funciona, pero porque no se esta
+        // utilizando la position en ningun lado, asumo que el error viene que ahi
+        //
+        //el id lo esta sacando correctamente, cuando lo pongo en snackbar lo imprime
     }
-/*
-    fun editBook(position: Int) {
-        idBookActual = booksList[position].idBook.toString()
-
-        idCompartido = ViewModelProvider(requireActivity()).get(sharedData::class.java)
-        idCompartido.dataID.value = idBookActual
-
-        findNavController().navigate(R.id.action_bookListFragment_to_editFragment)
-    }
-
-    fun deleteBook (position : Int){
-
-        db.collection("Books").document(booksList[position].idBook.toString()).delete()
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(),"Book deleted", Toast.LENGTH_SHORT).show()
-                adapter.notifyItemRemoved(position)
-                booksList.removeAt(position)
-            }
-            .addOnFailureListener { Toast.makeText(requireContext(),"Error in deleting book", Toast.LENGTH_SHORT).show() }
-    }*/
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

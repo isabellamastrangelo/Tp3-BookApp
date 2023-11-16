@@ -28,26 +28,10 @@ class Adapter2(
         this.booksList = booksList
     }
     class BooksHolder2 (v: View) : RecyclerView.ViewHolder(v) {
-        /*val title= v.findViewById<TextView>(R.id.titleBook)
-        val description= v.findViewById<TextView>(R.id.descriptionBook)*/
 
         val editar = v.findViewById<Button>(R.id.buttonDelete2)
         val eliminar = v.findViewById<Button>(R.id.buttonEdit2)
 
-        /*fun render(booksModel: Books){
-            title.text = booksModel.title
-            description.text = booksModel.description
-
-
-        }*/
-        /*fun setTitle (title : String) {
-            var txtTitle: TextView = view.findViewById(R.id.txtTitleBooks)
-            txtTitle.text = title
-        }
-
-        fun getItem () : ConstraintLayout {
-            return view.findViewById(R.id.itemLayout)
-        }*/
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksHolder2 {
@@ -55,27 +39,14 @@ class Adapter2(
         return (BooksHolder2(v))
     }
 
-
-
     override fun onBindViewHolder(holder: BooksHolder2, position: Int) {
         val item = booksList[position]
-        //holder.render(item)
         holder.eliminar.setOnClickListener {
             onDeleteClick(position)
         }
         holder.editar.setOnClickListener {
             onEditClick(position)
         }
-        /*holder.itemView.setOnClickListener {
-            onItemClick(position)
-        }*/
-
-        /*
-        holder.setTitle(booksList[position].title)
-        holder.getItem().setOnClickListener {
-            print("Click en título")
-            onClick(booksList[position])
-        }*/
     }
 
     override fun getItemCount(): Int {

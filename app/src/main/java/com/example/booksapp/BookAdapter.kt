@@ -12,15 +12,14 @@ import android.widget.ImageView
 import android.widget.Toast
 //import com.bumptech.glide.Glide
 import com.example.booksapp.R
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class BookAdapter(
     booksList: ArrayList<Books>,
-     //val onDeleteClick : (Int)->Unit,
-    // val onEditClick : (Int) -> Unit,
-     val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit
 
 ) : RecyclerView.Adapter<BookAdapter.BooksHolder>() {
     private var booksList: ArrayList<Books>
@@ -31,23 +30,13 @@ class BookAdapter(
         val title= v.findViewById<TextView>(R.id.titleBook)
         val description= v.findViewById<TextView>(R.id.descriptionBook)
 
-       // val editar = v.findViewById<Button>(R.id.buttonEdit)
-       // val eliminar = v.findViewById<Button>(R.id.buttonEdit)
 
         fun render(booksModel: Books){
-            title.text = booksModel.title
-            description.text = booksModel.description
+            //title.text = booksModel.title
+            //description.text = booksModel.description
 
-
+            //el error es:     java.lang.NullPointerException
         }
-        /*fun setTitle (title : String) {
-            var txtTitle: TextView = view.findViewById(R.id.txtTitleBooks)
-            txtTitle.text = title
-        }
-
-        fun getItem () : ConstraintLayout {
-            return view.findViewById(R.id.itemLayout)
-        }*/
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksHolder {
@@ -58,22 +47,12 @@ class BookAdapter(
     override fun onBindViewHolder(holder: BooksHolder, position: Int) {
         val item = booksList[position]
         holder.render(item)
-        /*holder.eliminar.setOnClickListener {
-            onDeleteClick(position)
+        print(item.toString())
+        if (item != null) {
+            holder.itemView.setOnClickListener {
+                onItemClick(position)
+            }
         }
-        holder.editar.setOnClickListener {
-            onEditClick(position)
-        }*/
-        holder.itemView.setOnClickListener {
-            onItemClick(position)
-        }
-
-        /*
-        holder.setTitle(booksList[position].title)
-        holder.getItem().setOnClickListener {
-            print("Click en título")
-            onClick(booksList[position])
-        }*/
     }
 
     override fun getItemCount(): Int {
@@ -81,3 +60,5 @@ class BookAdapter(
     }
 
 }
+
+
