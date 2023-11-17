@@ -34,8 +34,8 @@
 
     <TextView
         android:id="@+id/descriptionBook"
-        android:layout_width="254dp"
-        android:layout_height="264dp"
+        android:layout_width="367dp"
+        android:layout_height="314dp"
         android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
