@@ -1,15 +1,20 @@
 package com.example.booksapp
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.ContentValues
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.navigation.findNavController
-import com.google.android.material.snackbar.Snackbar
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class CreateUserFragment : Fragment() {
 
@@ -23,6 +28,7 @@ class CreateUserFragment : Fragment() {
     private lateinit var username: EditText
     private lateinit var password: EditText
     private lateinit var createButton: Button
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,23 +51,24 @@ class CreateUserFragment : Fragment() {
             val newPass: String = password.text.toString()
 
             print(newUser)
-            print(newPass)
-            var userExists: User? = viewModelLogin.usersList.find { u -> u.username == newUser }
 
-            if (newUser.isEmpty() || newPass.isEmpty()) {
-                Snackbar.make(v, "Please insert your Username and Password", Snackbar.LENGTH_SHORT).show()
-            }
-            else if (userExists != null) {
-                Snackbar.make(v, "That username already exists", Snackbar.LENGTH_SHORT).show()
-            }
-            else {
-                viewModelLogin.usersList.add(User(newUser, newPass))
-                Snackbar.make(v, "User created", Snackbar.LENGTH_SHORT).show()
-                print("user created")
-                view?.findNavController()?.navigate(R.id.action_createUserFragment_to_loginScreen)
-            }
+            auth = Firebase.auth
+            auth.createUserWithEmailAndPassword(newUser, newPass).addOnCompleteListener {  }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                        val user = auth.currentUser
+                        findNavController().navigate(R.id.action_createUserFragment_to_loginScreen)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(context, "That mail already has an account or doesnt exist", Toast.LENGTH_SHORT,).show()
+                    }
+                }
         }
+
     }
-
-
 }
+
+
